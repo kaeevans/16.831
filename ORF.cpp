@@ -8,6 +8,7 @@
 
 int main(void)
 {
+        printf("ORF pid %d\n", (int) getpid());
         SRCAM cam;
         // int ret = SR_OpenDlg(&cam, 2, 0); // 2: call open dialog, 0: no parent window
         int ret = SR_OpenETH(&cam, "192.168.1.33");
@@ -37,7 +38,7 @@ int main(void)
                 extractImageCOI(&CvMat(xyz), z, 2); // extract the z channel (change the 2 for another channel)
                 z.convertTo(z_display, CV_8UC1, 256.0 / 5.0, 0); // convert to 8 bit (0..255) values, here for 5 meter camera
                 cv::imshow("mainWin", z_display); // display image
-                c = cvWaitKey(5000); // wait 5 ms before continuing loop. if user presses a button, the loop will exit
+                c = cvWaitKey(1000); // wait 1 sec before continuing loop. if user presses a button, the loop will exit
         }
         SR_Close(cam);
         return 0;
