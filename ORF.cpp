@@ -15,6 +15,7 @@ int main(void)
         if(ret<=0) return -1; // ret holds the number of cameras found
         cv::Size imsize(SR_GetCols(cam), SR_GetRows(cam)); // SR image size
         int sizebytes = 2 * imsize.area() * sizeof(unsigned short); // number of bytes sent from the SR 
+        // namedWindow("mainWin",WINDOW_AUTOSIZE );
         cvNamedWindow("mainWin", CV_WINDOW_AUTOSIZE); 
         int sizestep = sizeof(float)*3; // size step from one xyz component to the next
         int c=-1; // user input variable
