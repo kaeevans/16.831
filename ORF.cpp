@@ -11,7 +11,8 @@ int main(void)
         printf("ORF pid %d\n", (int) getpid());
         SRCAM cam;
         // int ret = SR_OpenDlg(&cam, 2, 0); // 2: call open dialog, 0: no parent window
-        int ret = SR_OpenETH(&cam, "192.168.1.33");
+        // int ret = SR_OpenETH(&cam, "192.168.1.33");
+        int ret = SR_OpenETH(&cam, "169.254.1.33");
         if(ret<=0) return -1; // ret holds the number of cameras found
         cv::Size imsize(SR_GetCols(cam), SR_GetRows(cam)); // SR image size
         int sizebytes = 2 * imsize.area() * sizeof(unsigned short); // number of bytes sent from the SR 
