@@ -1,14 +1,14 @@
-13|	# Parameters
-14|	# SRC_CPPS: The source CPP files to compile
-15|	# EXEC: The executable name
-16|	
-17|	ifeq ($(SRC_CS) $(SRC_CPPS),)
-18|	  $(error No source files specified)
-19|	endif
-20|	
-21|	ifeq ($(EXEC),)
-22|	  $(error No executable file specified)
-23|	endif
+# Parameters
+# SRC_CPPS: The source CPP files to compile
+# EXEC: The executable name
+
+ifeq ($(SRC_CS) $(SRC_CPPS),)
+  $(error No source files specified)
+endif
+
+ifeq ($(EXEC),)
+  $(error No executable file specified)
+endif
 24|	
 25|	CXX                 ?= g++
 26|	
