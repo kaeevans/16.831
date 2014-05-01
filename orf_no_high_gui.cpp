@@ -1,10 +1,11 @@
 #include <opencv/cv.h>
-#include <opencv/highgui.h>
+//#include <opencv/highgui.h>
 #include <libMesaSR.h>
 #include <string>
 #include <cstdio>
 #include <iostream>
 #include <vector>
+//#include <time.h>
 
 int main(void)
 {
@@ -17,7 +18,7 @@ int main(void)
         cv::Size imsize(SR_GetCols(cam), SR_GetRows(cam)); // SR image size
         int sizebytes = 2 * imsize.area() * sizeof(unsigned short); // number of bytes sent from the SR 
         // namedWindow("mainWin",WINDOW_AUTOSIZE );
-        cvNamedWindow("mainWin", CV_WINDOW_AUTOSIZE); 
+        //cvNamedWindow("mainWin", CV_WINDOW_AUTOSIZE); 
         int sizestep = sizeof(float)*3; // size step from one xyz component to the next
         int c=-1; // user input variable
         // enable software trigger mode so that the LEDs will only turn
@@ -36,12 +37,13 @@ int main(void)
                                 &((float*)xyz.ptr())[2], // pointer to first z
                                 sizestep, sizestep, sizestep); // increments to next element
 
-                cv::Mat z, z_display; // z channel and output image
-                extractImageCOI(&CvMat(xyz), z, 2); // extract the z channel (change the 2 for another channel)
-                z.convertTo(z_display, CV_8UC1, 256.0 / 5.0, 0); // convert to 8 bit (0..255) values, here for 5 meter camera
-                cv::imshow("mainWin", z_display); // display image
-                c = cvWaitKey(1000); // wait 1 sec before continuing loop. if user presses a button, the loop will exit
-        }
+                //cv::Mat z, z_display; // z channel and output image
+                //extractImageCOI(&CvMat(xyz), z, 2); // extract the z channel (change the 2 for another channel)
+                //z.convertTo(z_display, CV_8UC1, 256.0 / 5.0, 0); // convert to 8 bit (0..255) values, here for 5 meter camera
+                //cv::imshow("mainWin", z_display); // display image
+                //c = cvWaitKey(1000); // wait 1 sec before continuing loop. if user presses a button, the loop will exit
+		sleep(1);        
+	}
         SR_Close(cam);
         return 0;
 }
