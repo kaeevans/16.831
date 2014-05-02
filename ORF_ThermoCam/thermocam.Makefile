@@ -13,11 +13,11 @@ endif
 CXX                 ?= g++
 
 OPENCV_ROOT	    ?= /usr/local
-
+MESASR_ROOT	    ?= /usr
 PUREGEV_ROOT        ?= ../../..
 PV_LIBRARY_PATH      =$(PUREGEV_ROOT)/lib
 
-CPPFLAGS            += -I$(PUREGEV_ROOT)/include -I$(OPENCV_ROOT)/include
+CPPFLAGS            += -I$(PUREGEV_ROOT)/include -I$(OPENCV_ROOT)/include -I$(MESASR_ROOT)/include
 ifdef _DEBUG
     CPPFLAGS  += -g -D_DEBUG
 else
@@ -25,7 +25,7 @@ else
 endif
 CPPFLAGS  += -D_UNIX_ -D_LINUX_
 
-LDFLAGS             += -L$(PUREGEV_ROOT)/lib -L$(OPENCV_ROOT)/lib        \
+LDFLAGS             += -L$(PUREGEV_ROOT)/lib -L$(OPENCV_ROOT)/lib -L$(MESASR_ROOT)/lib       \
                         -lPvBase                     \
                         -lPvDevice                   \
                         -lPvBuffer                   \
@@ -37,7 +37,8 @@ LDFLAGS             += -L$(PUREGEV_ROOT)/lib -L$(OPENCV_ROOT)/lib        \
                         -lPvTransmitterRaw           \
                         -lPvVirtualDevice	     \
 			-lopencv_core		     \
-			-lopencv_highgui
+			-lopencv_highgui  \
+			-lmesasr
 
 
 # Conditional linking and usage of the GUI on the sample only when available

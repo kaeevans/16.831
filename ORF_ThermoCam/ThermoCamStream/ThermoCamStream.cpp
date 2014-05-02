@@ -1,5 +1,5 @@
 #include <opencv/cv.h>
-#include <opencv/highgui.h>
+//#include <opencv/highgui.h>
 #include <stdio.h>
 #include <PvSampleUtils.h>
 #include <PvDevice.h>
@@ -19,6 +19,9 @@
 #include <PvSystem.h>
 #include <fstream>
 #include <ctime>
+///////////////////// ORF CODE ////////////////////
+#include <libMesaSR.h>
+///////////////////////////////////////////////////
 
 PV_INIT_SIGNAL_HANDLER();
 
@@ -26,6 +29,17 @@ PV_INIT_SIGNAL_HANDLER();
 
 bool AcquireImages()
 {
+	////////// ORF CODE ///////////
+	printf("ORF pid %d\n", (int) getpid());
+    SRCAM cam;
+    int ret = SR_OpenETH(&cam, "169.254.1.33");
+    if(ret<=0) return -1; // ret holds the number of cameras found
+    cv::Size imsize(SR_GetCols(cam), SR_GetRows(cam)); // SR image size
+    int sizebytes = 2 * imsize.area() * sizeof(unsigned short); // number of bytes sent from the SR 
+    int sizestep = sizeof(float)*3; // size step from one xyz component to the next
+    SR_SetMode(cam,AM_SW_TRIGGER);
+	/////////////////////
+
 	PvResult lResult;	
 	PvDeviceInfo *lDeviceInfo = NULL;
 	PvSystem lSystem;
@@ -109,6 +123,19 @@ bool AcquireImages()
     			cout << "<press a key to stop streaming>" << endl;
     			while ( !PvKbHit() )
     			{
+    				///////////////// ORF CODE //////////////////////////////////////
+    				ret = SR_Acquire(cam);
+	                cv::Mat xyz(imsize, CV_32FC3, cv::Scalar::all(0));
+	                if(ret!=sizebytes) break;
+	                // the coordinates are stored as three channels in the format
+	                // (x1, y1, z1, x2, y2, z2, ... ) squentially row by row
+	                SR_CoordTrfFlt( cam,
+	                                &((float*)xyz.ptr())[0], // pointer to first x
+	                                &((float*)xyz.ptr())[1], // pointer to first y
+	                                &((float*)xyz.ptr())[2], // pointer to first z
+	                                sizestep, sizestep, sizestep); // increments to next element
+	                ///////////////////////////////////////////////////////////////////
+
         			PvBuffer *lBuffer = NULL;
 				PvImage *lImage = NULL;
 				PvResult lOperationResult;	
@@ -165,6 +192,9 @@ bool AcquireImages()
     			lStream.Close();
     			cout << "Disconnecting ThermoCam" << endl;
     			lDevice.Disconnect();
+    			//////////////////// ORF CODE ///////////////
+    			SR_Close(cam);
+    			//////////////////////////////////////////////
 			return true;
 		}
 	}
