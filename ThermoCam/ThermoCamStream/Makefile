@@ -1,5 +1,5 @@
 # Parameters
 # SRC_CPPS = \
-           thermocam.cpp \
+           ThermoCamStream.cpp \
 EXEC       = thermocam
 Include ../thermocam.Makefile
