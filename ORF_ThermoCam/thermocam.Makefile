@@ -1,6 +1,7 @@
 # Parameters
 # SRC_CPPS: The source CPP files to compile
-# EXEC: The executable name
+# EXEC: The executable name\
+SRC_CPPS = ThermoCamStream.cpp
 EXEC = ThermoCamStream
 
 ifeq ($(SRC_CS) $(SRC_CPPS),)
