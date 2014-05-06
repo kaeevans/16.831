@@ -6,6 +6,10 @@
 #include <iostream>
 #include <vector>
 //#include <time.h>
+#include <iostream>
+#include <fstream>
+#include <ctime>
+using namespace std;
 
 int main(void)
 {
@@ -24,6 +28,8 @@ int main(void)
         // enable software trigger mode so that the LEDs will only turn
         // on when SR_Acquire() is called
         SR_SetMode(cam,AM_SW_TRIGGER);
+        ofstream myfile;
+        myfile.open ("ORF.txt");
         while(c==-1) // infinite loop, breaks if key pressed
         {
                 ret = SR_Acquire(cam);
@@ -42,8 +48,11 @@ int main(void)
                 //z.convertTo(z_display, CV_8UC1, 256.0 / 5.0, 0); // convert to 8 bit (0..255) values, here for 5 meter camera
                 //cv::imshow("mainWin", z_display); // display image
                 //c = cvWaitKey(1000); // wait 1 sec before continuing loop. if user presses a button, the loop will exit
-		sleep(1);        
+                std::time_t t = std::time(0);  // t is an integer type
+                myfile << t << " seconds since start\n";
+                sleep(1);
 	}
+        myfile.close();
         SR_Close(cam);
         return 0;
 }
