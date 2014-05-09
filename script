@@ -1,5 +1,4 @@
 #!/bin/bash
-# My first script
 
 # echo "Running ORF executable"
 # (cd $ORF/; ./ORF)
@@ -8,15 +7,32 @@
 # echo "Running Goggles executable"
 # (cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture/home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt)
 
-tab="--tab-with-profile=Default -e "
-cmd="cd $ORF/; ./ORF"
-echo "Running ORF executable"
-gnome-terminal --tab -e $cmd
-tab="--tab-with-profile=Default -e "
-cmd="cd $ThermoCam/ThermoCamStream/; ./Thermo"
-echo "Running ThermoCam executable"
-gnome-terminal --tab -e $cmd
-tab="--tab-with-profile=Default -e "
-cmd="cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture/home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt"
-echo "Running Goggles executable"
-gnome-terminal --tab -e $cmd
+
+################################################################
+
+
+orfcmd = "cd $ORF/; ./ORF"
+thermocmd = "cd $ThermoCam/ThermoCamStream/; ./Thermo"
+gogglescmd = "cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture/home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt"
+
+gnome-terminal \
+  --tab-with-profile=Default -e $orfcmd \
+  --tab-with-profile=Default -e $thermocmd \
+  --tab-with-profile=Default -e $gogglescmd
+
+echo "Running ORF, ThermoCam, and Goggles executables"
+
+
+###############################################################
+
+
+# tab="--tab-with-profile=Default -e "
+# orfcmd="cd $ORF/; ./ORF"
+# echo "Running ORF executable"
+# gnome-terminal --tab -e $orfcmd
+# thermocmd="cd $ThermoCam/ThermoCamStream/; ./Thermo"
+# echo "Running ThermoCam executable"
+# gnome-terminal --tab -e $thermocmd
+# gogglescmd="cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture/home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt"
+# echo "Running Goggles executable"
+# gnome-terminal --tab -e $gogglescmd
