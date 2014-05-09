@@ -4,6 +4,7 @@
 #include <string>
 #include <cstdio>
 #include <iostream>
+#include <ctime>
 #include <vector>
 
 int main(void)
@@ -23,6 +24,7 @@ int main(void)
         // enable software trigger mode so that the LEDs will only turn
         // on when SR_Acquire() is called
         SR_SetMode(cam,AM_SW_TRIGGER);
+        std::time_t start_time = std::time(0);
         while(c==-1) // infinite loop, breaks if key pressed
         {
                 ret = SR_Acquire(cam);
@@ -40,6 +42,12 @@ int main(void)
                 extractImageCOI(&CvMat(xyz), z, 2); // extract the z channel (change the 2 for another channel)
                 z.convertTo(z_display, CV_8UC1, 256.0 / 5.0, 0); // convert to 8 bit (0..255) values, here for 5 meter camera
                 cv::imshow("mainWin", z_display); // display image
+                std::time_t t = std::time() - start_time;
+                printf("ORF data taken at %d seconds\n", t);
+                //std::cout << "ORF data taken at" << t << "seconds\n";
+                std::stringstream filename;
+                filename << "./ORF_photos/" << t << ".bmp"
+                cv::imwrite(filename.str(),z_display);
                 c = cvWaitKey(1000); // wait 1 sec before continuing loop. if user presses a button, the loop will exit
         }
         SR_Close(cam);
