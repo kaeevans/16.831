@@ -1,11 +1,36 @@
 #!/bin/bash
 
 echo "Running ORF executable"
-(cd $/home/16.831/ORF/; ./ORF)
+cd $/home/16.831/ORF/
+./ORF &
+ORF_PID = $!
+echo ORF_PID
+
 echo "Running ThermoCam executable"
-(cd $/root/thermorf/thermorf/; source /opt/pleora/ebus_sdk/RHEL-6-i686/bin/set_puregev_env; ./thermorf)
+cd $/root/thermorf/thermorf/
+source /opt/pleora/ebus_sdk/RHEL-6-i686/bin/set_puregev_env
+./thermorf &
+thermocam_PID = $!
+echo thermocam_PID
+
 echo "Running Goggles executable"
-(cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture /home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt)
+cd $/home/GPF_DIR/build/bin/
+./TP_1106_Capture /home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt &
+goggles_PID = $!
+echo goggles_PID
+
+sleep 10m
+
+kill -SIGKILL ORF_PID & kill -SIGKILL thermocam_PID & kill -SIGKILL goggles_PID
+
+##################################################################
+
+# echo "Running ORF executable"
+# (cd $/home/16.831/ORF/; ./ORF)
+# echo "Running ThermoCam executable"
+# (cd $/root/thermorf/thermorf/; source /opt/pleora/ebus_sdk/RHEL-6-i686/bin/set_puregev_env; ./thermorf)
+# echo "Running Goggles executable"
+# (cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture /home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt)
 
 
 ################################################################
@@ -13,7 +38,7 @@ echo "Running Goggles executable"
 
 # echo "Running ORF, ThermoCam, and Goggles executables"
 # orfcmd = "cd $/home/16.831/ORF/; ./ORF"
-# thermocmd = "cd $/root/thermorf/thermorf/; source /opt/pleora/ebus_sdk/RHEL-6-i686/bin/set_puregev_env; ./Thermo"
+# thermocmd = "cd $/root/thermorf/thermorf/; source /opt/pleora/ebus_sdk/RHEL-6-i686/bin/set_puregev_env; ./thermorf"
 # gogglescmd = "cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture /home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt"
 
 # gnome-terminal \
@@ -29,7 +54,7 @@ echo "Running Goggles executable"
 # orfcmd="cd $/home/16.831/ORF/; ./ORF"
 # echo "Running ORF executable"
 # gnome-terminal --tab -e $orfcmd
-# thermocmd="cd $/root/thermorf/thermorf/; source /opt/pleora/ebus_sdk/RHEL-6-i686/bin/set_puregev_env; ./Thermo"
+# thermocmd="cd $/root/thermorf/thermorf/; source /opt/pleora/ebus_sdk/RHEL-6-i686/bin/set_puregev_env; ./thermorf"
 # echo "Running ThermoCam executable"
 # gnome-terminal --tab -e $thermocmd
 # gogglescmd="cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture /home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt"
