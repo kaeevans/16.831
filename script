@@ -1,20 +1,20 @@
 #!/bin/bash
 
 echo "Running ORF executable"
-(cd $ORF/; ./ORF)
+(cd $/home/16.831/ORF/; ./ORF)
 echo "Running ThermoCam executable"
-(cd $ThermoCam/ThermoCamStream/; ./Thermo)
+(cd $/root/thermorf/thermorf/; source /opt/pleora/ebus_sdk/RHEL-6-i686/bin/set_puregev_env; ./thermorf)
 echo "Running Goggles executable"
-(cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture/home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt)
+(cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture /home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt)
 
 
 ################################################################
 
 
 # echo "Running ORF, ThermoCam, and Goggles executables"
-# orfcmd = "cd $ORF/; ./ORF"
-# thermocmd = "cd $ThermoCam/ThermoCamStream/; ./Thermo"
-# gogglescmd = "cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture/home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt"
+# orfcmd = "cd $/home/16.831/ORF/; ./ORF"
+# thermocmd = "cd $/root/thermorf/thermorf/; source /opt/pleora/ebus_sdk/RHEL-6-i686/bin/set_puregev_env; ./Thermo"
+# gogglescmd = "cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture /home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt"
 
 # gnome-terminal \
 #   --tab-with-profile=Default -e $orfcmd \
@@ -26,12 +26,12 @@ echo "Running Goggles executable"
 
 
 # tab="--tab-with-profile=Default -e "
-# orfcmd="cd $ORF/; ./ORF"
+# orfcmd="cd $/home/16.831/ORF/; ./ORF"
 # echo "Running ORF executable"
 # gnome-terminal --tab -e $orfcmd
-# thermocmd="cd $ThermoCam/ThermoCamStream/; ./Thermo"
+# thermocmd="cd $/root/thermorf/thermorf/; source /opt/pleora/ebus_sdk/RHEL-6-i686/bin/set_puregev_env; ./Thermo"
 # echo "Running ThermoCam executable"
 # gnome-terminal --tab -e $thermocmd
-# gogglescmd="cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture/home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt"
+# gogglescmd="cd $/home/GPF_DIR/build/bin/; ./TP_1106_Capture /home/GPF_DIR CURRENT_CALIB_DIR pFile-nosphere.txt"
 # echo "Running Goggles executable"
 # gnome-terminal --tab -e $gogglescmd
